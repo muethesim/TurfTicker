@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import User
+from .models import User, Booking, Contact
 
 
 def loginPage(request):
@@ -7,11 +7,13 @@ def loginPage(request):
     return render(request, 'base/login_register.html', content)
 
 def orderPage(request):
-    content = {'page' : 'Orders', 'tabulated' : True}
+    orders = Booking.objects.all()
+    content = {'page' : 'Orders', 'tabulated' : True, 'orders' : orders}
     return render(request, 'base/orders.html', content)
 
 def userPage(request):
-    content = {'page' : 'Users', 'tabulated' : True}
+    users = User.objects.all()
+    content = {'page' : 'Users', 'tabulated' : True, 'users' : users}
     return render(request, 'base/users.html', content)
 
 def statisticPage(request):
@@ -19,11 +21,15 @@ def statisticPage(request):
     return render(request, 'base/statistics.html', content)
 
 def profilePage(request):
-    content = {'page' : 'Profile'}
+    username = request.GET.get('username') if request.GET.get('username') != None else 'admin'
+    user = User.objects.get(username = username)
+    bookings = Booking.objects.filter(user = user)[:5]
+    content = {'page' : 'Profile', 'user' : user, 'orders':bookings}
     return render(request, 'base/profile.html', content)
 
 def inboxPage(request):
-    content = {'page' : 'Inbox'}
+    contacts = Contact.objects.all()
+    content = {'page' : 'Inbox', 'messages' : contacts}
     return render(request, 'base/inbox.html', content)
 
 def slotPage(request):

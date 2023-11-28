@@ -13,5 +13,8 @@
   <body>
     {% block content %} {% endblock %}
     <script src="{% static 'script/script.js' %}"></script>
+    {% if tabulated %}
+    <script src="{% static 'script/grid-script.js' %}"></script>
+    {% endif %}
   </body>
 </html>

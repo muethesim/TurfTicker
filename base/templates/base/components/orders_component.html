@@ -1,0 +1,39 @@
+<div class="products-header">
+    <div class="product-cell image">User</div>
+    <div class="product-cell category">Date</div>
+    <div class="product-cell status-cell">Time</div>
+    <div class="product-cell sales">Amount</div>
+    <div class="product-cell stock">Phone</div>
+    <div class="product-cell price">Last Order</div>
+  </div>
+  {% for order in orders %}
+  <div class="products-row">
+    <div class="product-cell image">
+      <img
+        src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
+        alt="product"
+      />
+      <span><a href="{% url 'profile-page' %}?username={{ order.user.username }}" style="text-decoration: none; color: var(--app-content-main-color);">@{{ order.user.username }}</a></span>
+    </div>
+    <div class="product-cell category">
+      <span class="cell-label">Date:</span>{{ order.date }}
+    </div>
+    <div class="product-cell status-cell">
+      <span class="cell-label">Time:</span>{{ order.slot }}
+    </div>
+    <div class="product-cell sales">
+      <span class="cell-label">Amount:</span>₹ {{ order.amt }}
+    </div>
+    <div class="product-cell stock">
+      <span class="cell-label">Phone:</span>{{ order.user.phone }}
+    </div>
+    <div class="product-cell price">
+      <span class="cell-label">Last Order:</span>
+      {% if order.user.booking_set.all.0 == order %}
+      This One
+      {% else %}
+      {{ order.user.booking_set.all.0.date }}
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}

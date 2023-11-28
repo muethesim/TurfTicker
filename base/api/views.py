@@ -86,7 +86,8 @@ def bookSlot(request):
         paymentId = request.POST.get('paymentId')
         user = User.objects.get(username = username)
         slot = TimeSlot.objects.get(time = time)
-        bookedItem = Booking(user = user, date = date, slot = slot, paymentId = paymentId)
+        amt = slot.amount
+        bookedItem = Booking(user = user, date = date, slot = slot, paymentId = paymentId, amt=amt)
         bookedItem.save()
         serialized = BookingSerializer(bookedItem, many=False)
         return Response(serialized.data, status=status.HTTP_201_CREATED)
