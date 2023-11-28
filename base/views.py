@@ -23,7 +23,6 @@ def statisticPage(request):
     sendData = {}
     for i in range(7):
         sendData[td-timedelta(days=i)] = (bookings.filter(date = td-timedelta(days=i)).count()/13)*100
-    print(sendData)
     content = {'page' : 'Statistics', 'statistics' : sendData}
     return render(request, 'base/statistics.html', content)
 
