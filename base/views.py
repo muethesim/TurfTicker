@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import User, Booking, Contact
+from datetime import date
 
 
 def loginPage(request):
@@ -17,6 +18,9 @@ def userPage(request):
     return render(request, 'base/users.html', content)
 
 def statisticPage(request):
+    td = date.today()
+    bookings = Booking.objects.filter(date = td)
+    print(bookings)
     content = {'page' : 'Statistics'}
     return render(request, 'base/statistics.html', content)
 
