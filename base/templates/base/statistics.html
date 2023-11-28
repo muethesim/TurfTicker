@@ -6,19 +6,13 @@
     <div class="products-area-wrapper tableView">
       <div class="profile__about">
         <div class="row">
-          <h3>Data</h3>
-
-          <h4 class="mt-5">Last 7 Days : </h4>
+          <h4 class="mt-5">Last 7 Days :</h4>
           <div id="bar-chart">
             <div class="graph">
               <ul class="x-axis">
-                <li><span>22-10-2023</span></li>
-                <li><span>22-10-2023</span></li>
-                <li><span>22-10-2023</span></li>
-                <li><span>22-10-2023</span></li>
-                <li><span>22-10-2023</span></li>
-                <li><span>22-10-2023</span></li>
-                <li><span>22-10-2023</span></li>
+                {% for stat in statistics %}
+                <li><span>{{ stat }}</span></li>
+                {% endfor %}
               </ul>
               <ul class="y-axis">
                 <li><span>12</span></li>
@@ -30,41 +24,13 @@
                 <li><span>0</span></li>
               </ul>
               <div class="bars">
+                {% for key, value in statistics.items %}
                 <div class="bar-group">
-                  <div class="bar bar-2 stat-2" style="height: 100%">
+                  <div class="bar bar-2 stat-2" style="height: {{ value }}%;">
                     <span>5680</span>
                   </div>
                 </div>
-                <div class="bar-group">
-                  <div class="bar bar-2 stat-2" style="height: 86%">
-                    <span>6880</span>
-                  </div>
-                </div>
-                <div class="bar-group">
-                  <div class="bar bar-2 stat-2" style="height: 72%">
-                    <span>5760</span>
-                  </div>
-                </div>
-                <div class="bar-group">
-                  <div class="bar bar-2 stat-2" style="height: 64%">
-                    <span>5120</span>
-                  </div>
-                </div>
-                <div class="bar-group">
-                  <div class="bar bar-2 stat-2" style="height: 33%">
-                    <span>2640</span>
-                  </div>
-                </div>
-                <div class="bar-group">
-                  <div class="bar bar-2 stat-2" style="height: 8.33%">
-                    <span>2640</span>
-                  </div>
-                </div>
-                <div class="bar-group">
-                  <div class="bar bar-2 stat-2" style="height: 43%">
-                    <span>2640</span>
-                  </div>
-                </div>
+                {% endfor %}
               </div>
             </div>
           </div>

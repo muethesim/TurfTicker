@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import User, Booking, Contact
-from datetime import date
+from datetime import date, timedelta
 
 
 def loginPage(request):
@@ -19,9 +19,12 @@ def userPage(request):
 
 def statisticPage(request):
     td = date.today()
-    bookings = Booking.objects.filter(date = td)
-    print(bookings)
-    content = {'page' : 'Statistics'}
+    bookings = Booking.objects
+    sendData = {}
+    for i in range(7):
+        sendData[td-timedelta(days=i)] = (bookings.filter(date = td-timedelta(days=i)).count()/13)*100
+    print(sendData)
+    content = {'page' : 'Statistics', 'statistics' : sendData}
     return render(request, 'base/statistics.html', content)
 
 def profilePage(request):
