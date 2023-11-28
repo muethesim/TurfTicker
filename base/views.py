@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from .models import User, Booking, Contact
+from .models import User, Booking, Contact, TimeSlot
 from datetime import date, timedelta
+# from .forms import SlotForm
 
 
 def loginPage(request):
@@ -39,5 +40,14 @@ def inboxPage(request):
     return render(request, 'base/inbox.html', content)
 
 def slotPage(request):
-    content = {'page' : 'Slots'}
+    slots = TimeSlot.objects.all()
+    content = {'page' : 'Slots', 'slots' : slots}
+    if request.method == 'POST':
+        time = request.POST.get('time')
+        amt = request.POST.get('amt')
+        slot = TimeSlot.objects.get(time = time)
+        slot.amount = amt
+        slot.save()
+        content['message'] = True
+        return render(request, 'base/slots.html', content)
     return render(request, 'base/slots.html', content)

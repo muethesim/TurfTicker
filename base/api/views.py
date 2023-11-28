@@ -4,7 +4,7 @@ from .serializer import UserSerializer, TimeSlotSerializer, BookingSerializer
 from ..models import User, Contact, Booking, TimeSlot
 from .forms import MyUserCreationForm
 from rest_framework import status
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login, logout
 
 @api_view(['GET'])
 def main(request):
@@ -44,6 +44,8 @@ def loginUser(request):
         sendData = {'error' : 'No User Found in the username.'}
         return Response(sendData, status=status.HTTP_404_NOT_FOUND)
     user = authenticate(request, email=email, password=password)
+    login(request, user)
+    logout(request)
     if user is not None:
         serial = UserSerializer(user, many=False)
         return Response(serial.data, status=status.HTTP_202_ACCEPTED)

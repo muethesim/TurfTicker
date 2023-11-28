@@ -20,9 +20,10 @@
           {% if user.username != 'admin' %}
           <div class="profile__about">
             <h3>Activity :</h3>
-            <p>Last Order</p>
-            <p>Total Orders</p>
-            <p>Created On</p>
+            <p>Last Order : {{ user.booking_set.all.0.date }}</p>
+            <p>Total Orders : {{ user.booking_set.all.count }}</p>
+            <p>Created On : {{ user.date_joined.date }}</p>
+            <p>Last Logged : {{ user.last_login }}</p>
           </div>
           <div class="profile__about">
             <h3>Last Orders :</h3>
