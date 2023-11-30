@@ -31,7 +31,7 @@ def registerUser(request):
         serial = UserSerializer(user, many=False)
         return Response(serial.data, status=status.HTTP_201_CREATED)
     else:
-        sendData = {'error' : 'Username Already Exists.'}
+        sendData = {'error' : form.errors}
     return Response(sendData, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
@@ -44,9 +44,9 @@ def loginUser(request):
         sendData = {'error' : 'No User Found in the username.'}
         return Response(sendData, status=status.HTTP_404_NOT_FOUND)
     user = authenticate(request, email=email, password=password)
-    login(request, user)
-    logout(request)
     if user is not None:
+        login(request, user)
+        logout(request)
         serial = UserSerializer(user, many=False)
         return Response(serial.data, status=status.HTTP_202_ACCEPTED)
     sendData = {'error' : 'Wrong Password'}
@@ -137,6 +137,7 @@ def viewSlot(request):
         user = User.objects.get(username = username)
         bookings = Booking.objects.filter(user = user)
         serialized = BookingSerializer(bookings, many=True)
+        print(serialized.data)
         return Response(serialized.data, status=status.HTTP_200_OK)
     except:
         sendData = {'error' : 'Something went wrong.'}
